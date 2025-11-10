@@ -1,0 +1,41 @@
+#include <stdio.h>
+#define MAX 100
+int pq[MAX], n = 0, i, j, val;
+void insert() {
+    printf("Insert value: ");
+    scanf("%d", &val);
+    i = n-1;
+    while (i >= 0 && pq[i] > val) {
+        pq[i+1] = pq[i];
+        i--;
+    }
+    pq[i+1] = val;
+    n++;
+}
+void delete() {
+    if (n == 0) printf("Underflow\n");
+    else {
+        printf("Deleted: %d\n", pq[0]);
+        for (i = 1; i < n; i++) pq[i-1] = pq[i];
+        n--;
+    }
+}
+void display() {
+    if (n == 0) printf("Empty\n");
+    else {
+        for (i = 0; i < n; i++) printf("%d ", pq[i]);
+        printf("\n");
+    }
+}
+int main() {
+    int ch;
+    while (1) {
+        printf("1.Insert 2.Delete 3.Display 4.Exit\n");
+        scanf("%d", &ch);
+        if (ch == 1) insert();
+        else if (ch == 2) delete();
+        else if (ch == 3) display();
+        else break;
+    }
+    return 0;
+}
