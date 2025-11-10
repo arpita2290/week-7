@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node { int data; struct node *next; };
+struct node *front = NULL, *rear = NULL, *temp;
+void insert() {
+    temp = (struct node*)malloc(sizeof(struct node));
+    printf("Insert value: ");
+    scanf("%d", &temp->data);
+    temp->next = NULL;
+    if (rear == NULL) front = rear = temp;
+    else { rear->next = temp; rear = temp; }
+}
+void delete() {
+    if (front == NULL) printf("Underflow\n");
+    else {
+        printf("Deleted: %d\n", front->data);
+        temp = front;
+        front = front->next;
+        free(temp);
+        if (front == NULL) rear = NULL;
+    }
+}
+void display() {
+    temp = front;
+    if (temp == NULL) printf("Empty\n");
+    else {
+        while (temp) { printf("%d ", temp->data); temp = temp->next; }
+        printf("\n");
+    }
+}
+int main() {
+    int ch;
+    while (1) {
+        printf("1.Insert 2.Delete 3.Display 4.Exit\n");
+        scanf("%d", &ch);
+        if (ch == 1) insert();
+        else if (ch == 2) delete();
+        else if (ch == 3) display();
+        else break;
+    }
+    return 0;
+}
