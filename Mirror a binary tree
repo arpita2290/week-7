@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* left, *right;
+};
+struct Node* newNode(int val) {
+    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+    node->data = val;
+    node->left = node->right = NULL;
+    return node;
+}
+struct Node* mirror(struct Node* root) {
+    if (!root) return NULL;
+    struct Node* leftM = mirror(root->left);
+    struct Node* rightM = mirror(root->right);
+    root->left = rightM;
+    root->right = leftM;
+    return root;
+}
+void inorder(struct Node* root) {
+    if (root) {
+        inorder(root->left);
+        printf("%d ", root->data);
+        inorder(root->right);
+    }
+}
+int main() {
+    struct Node* root = newNode(1);
+    root->left = newNode(2);
+    root->right = newNode(3);
+    root->left->left = newNode(4);
+    root->left->right = newNode(5);
+    printf("Inorder before mirror: ");
+    inorder(root);
+    printf("\n");
+    mirror(root);
+    printf("Inorder after mirror: ");
+    inorder(root);
+    printf("\n");
+    return 0;
+}
